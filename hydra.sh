@@ -11,7 +11,6 @@ sudo apt install hydra
 sudo apt install zenity
 
 echo -e "$GREEN""downloading dictionaries""$NC"
-wget -q https://raw.githubusercontent.com/danielmiessler/SecLists/master/Passwords/Common-Credentials/10-million-password-list-top-1000000.txt
 wget -q https://github.com/praetorian-inc/Hob0Rules/raw/master/wordlists/rockyou.txt.gz
 
 echo -e "enter password to crack: "
