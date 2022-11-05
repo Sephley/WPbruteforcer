@@ -11,7 +11,7 @@ sudo apt install hydra
 sudo apt install zenity
 
 echo -e "$GREEN""downloading dictionaries""$NC"
-wget -q https://github.com/praetorian-inc/Hob0Rules/raw/master/wordlists/rockyou.txt.gz
+wget -q https://github.com/Sephley/Hydra/blob/main/wordlists/rockyou.txt.gz
 
 echo -e "enter password to crack: "
 read -r PASSWORD
