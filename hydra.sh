@@ -39,9 +39,9 @@ do test -n "$d" && break;
 echo -e "$RED>>> Invalid Selection""$NC"; done
 
 if [ "$REPLY" == 1 ] ;
-then echo -e "you picked the following wordlist: rockyou.txt"
+then echo -e "$GREEN""you picked the following wordlist: rockyou.txt""$NC"
 hydra -l "$USERNAME" -P ~/pwbruteforcer/wordlist/$ROCKYOU "$IPADDRESS" -V http-form-post
-else echo -e "you picked the following wordlist: 1milpwlist.txt"
+else echo -e "$GREEN""you picked the following wordlist: 1milpwlist.txt""$NC"
 hydra -l "$USERNAME" -P ~/pwbruteforcer/wordlist/$ONEMILPWLIST "$IPADDRESS" -V http-form-post
 fi
 
