@@ -10,19 +10,22 @@ echo -e "downloading reqired packages..."
 sudo apt install hydra
 sudo apt install zenity
 
-# download wordlists
+# download and unpack wordlists
 echo -e "$GREEN""downloading wordlists""$NC"
 wget -q https://github.com/Sephley/Hydra/blob/main/wordlists/rockyou.txt.gz
-gzip -d wordlists/rockyou.txt.gz 
+#gzip -d wordlists/rockyou.txt.gz 
 wget -q https://github.com/Sephley/Hydra/blob/main/wordlists/10-million-password-list-top-1000000.txt
 
-echo -e "enter username: "
+echo -e "$GREEN""enter username: ""$NC"
 read -r USERNAME
+
+echo -e "$GREEN""type your destined IP-Address: ""$NC"
+read -r IPADDRESS
 
 echo -e "$GREEN""select the wordlist you would like to use\n""$NC"
 select d in */wordlists/; do test -n "$d" && break; echo -e "$RED>>> Invalid Selection""$NC"; done
 cd "$d" && pwd
 
-hydra -l "$USERNAME" -P ""
+hydra -l "$USERNAME" -P "" "$IPADDRESS" -V http-form-post
 
 # use pw-inspector to filter?
