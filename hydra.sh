@@ -21,7 +21,7 @@ echo -e "$GREEN""downloading wordlists""$NC"
 wget -q https://github.com/Sephley/Hydra/blob/main/wordlists/rockyou.txt.gz -o ~/pwbruteforcer/wordlists
 wget -q https://github.com/Sephley/Hydra/blob/main/wordlists/1milpwlist.txt -o ~/pwbruteforcer/wordlists
 echo -e "$GREEN""de-compressing wordlists""$NC"
-gzip -dc wordlists/rockyou.txt.gz ~/pwbruteforcer/wordlists/rockyou.txt
+gzip -dc wordlists/rockyou.txt.gz > ~/pwbruteforcer/wordlists/rockyou.txt
 
 echo -e "$GREEN""enter username: ""$NC"
 read -r USERNAME
