@@ -9,7 +9,7 @@ GREEN='\u001b[32m'
 NC='\033[0m' # No Color
 
 # install required packages
-echo -e "downloading reqired packages..."
+echo -e "downloading required packages..."
 sudo apt install hydra
 
 # download and unpack wordlists
