@@ -17,12 +17,12 @@ mkdir ~/wpbruteforcer
 mkdir ~/wpbruteforcer/wordlists
 
 # download wordlists
-echo -e "$GREEN""moving wordlists""$NC"
-wget -q https://github.com/Sephley/WPbruteforcer/raw/main/wordlists/rockyou.txt.gz -o ~/wpbruteforcer/wordlists
-wget -q https://github.com/Sephley/WPbruteforcer/raw/main/wordlists/1milpwlist.txt -o ~/wpbruteforcer/wordlists
+echo -e "$GREEN""downloading wordlists...""$NC"
+wget -q https://github.com/Sephley/WPbruteforcer/raw/main/wordlists/rockyou.txt.gz -O ~/wpbruteforcer/wordlists/rockyou.txt.gz
+wget -q https://github.com/Sephley/WPbruteforcer/raw/main/wordlists/1milpwlist.txt -O ~/wpbruteforcer/wordlists/1milpwlist.txt
 
 # de-compress rockyou.txt
-echo -e "$GREEN""de-compressing wordlists""$NC"
+echo -e "$GREEN""de-compressing wordlists...""$NC"
 gzip -d ~/wpbruteforcer/wordlists/rockyou.txt.gz
 
 echo -e "$GREEN""would you like to use a username wordlist, or would you like to try a specific one?\n""$NC"
