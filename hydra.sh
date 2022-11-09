@@ -69,6 +69,7 @@ hydraspecificusername () {
 else 
     echo -e "$GREEN""you picked the following wordlist: 1milpwlist.txt""$NC"
     hydra -l "$USERNAME" -P "$ONEMILPWLIST" "$NETWORKADDRESS" -V http-form-post '/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log In&testcookie=1:S=dashboard'
+    exit 0
 fi
 }
 
