@@ -20,13 +20,22 @@ echo ' \ \  \  __\ \  \ \   ____\ \   __  \ \   _  _\ \  \\\  \   \ \  \ \ \   _
 echo '  \ \  \|\__\_\  \ \  \___|\ \  \|\  \ \  \\  \\ \  \\\  \   \ \  \ \ \  \_| \ \  \\\  \ \  \\  \\ \  \____\ \  \_|\ \ \  \\  \|'
 echo '   \ \____________\ \__\    \ \_______\ \__\\ _\\ \_______\   \ \__\ \ \__\   \ \_______\ \__\\ _\\ \_______\ \_______\ \__\\ _\ '
 echo '    \|____________|\|__|     \|_______|\|__|\|__|\|_______|    \|__|  \|__|    \|_______|\|__|\|__|\|_______|\|_______|\|__|\|__|'                                                                                                                       
+echo ''
+echo ' ________      ___    ___      ________  _______   ________  ___  ___  ___       _______       ___    ___'
+echo '|\   __  \    |\  \  /  /|    |\   ____\|\  ___ \ |\   __  \|\  \|\  \|\  \     |\  ___ \     |\  \  /  /|'
+echo '\ \  \|\ /_   \ \  \/  / /    \ \  \___|\ \   __/|\ \  \|\  \ \  \\\  \ \  \    \ \   __/|    \ \  \/  / /'
+echo ' \ \   __  \   \ \    / /      \ \_____  \ \  \_|/_\ \   ____\ \   __  \ \  \    \ \  \_|/__   \ \    / /'
+echo '  \ \  \|\  \   \/  /  /        \|____|\  \ \  \_|\ \ \  \___|\ \  \ \  \ \  \____\ \  \_|\ \   \/  /  /'
+echo '   \ \_______\__/  / /            ____\_\  \ \_______\ \__\    \ \__\ \__\ \_______\ \_______\__/  / /'  
+echo '    \|_______|\___/ /            |\_________\|_______|\|__|     \|__|\|__|\|_______|\|_______|\___/ /'     
+echo '             \|___|/             \|_________|                                                \|___|/'      
 
 getdependencies () {
 # install required packages
 echo -e "$GREEN""\ndownloading required packages...""$NC"
 sudo apt install hydra
 
-# create directories
+# create directories and files
 mkdir ~/wpbruteforcer
 mkdir ~/wpbruteforcer/wordlists
 
@@ -39,6 +48,7 @@ wget -q https://raw.githubusercontent.com/Sephley/WPbruteforcer/main/wordlists/u
 # de-compress rockyou.txt
 echo -e "$GREEN""de-compressing wordlists...""$NC"
 gzip -d ~/wpbruteforcer/wordlists/rockyou.txt.gz
+rm ~/wpbruteforcer/wordlists/rockyou.txt.gz
 }
 
 hydrausernamewordlist () {
@@ -80,6 +90,10 @@ select w in 'I want to use a wordlist' 'I want to try a specific username';
 do test -n "$w" && break; 
 echo -e "$RED>>> Invalid Selection""$NC"; done
 
+}
+
+getdependencies
+getusernamewordlist
 if [ "$REPLY" == 2 ]; then
     echo -e "$GREEN""enter username: ""$NC"
     read -r USERNAME
@@ -91,9 +105,3 @@ else
     getnetworkaddress
     hydrausernamewordlist
 fi
-}
-
-getdependencies
-getusernamewordlist
-
-# use pw-inspector to filter?
