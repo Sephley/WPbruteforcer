@@ -51,6 +51,7 @@ gzip -d ~/wpbruteforcer/wordlists/rockyou.txt.gz
 rm ~/wpbruteforcer/wordlists/rockyou.txt.gz
 }
 
+# brute-force using both a username & a password worlist
 hydrausernamewordlist () {
 if [ "$REPLY" == 1 ]; then 
     echo -e "$GREEN""you picked the following wordlist: rockyou.txt""$NC"
@@ -62,6 +63,7 @@ else
 fi
 }
 
+# brute-force using specified username & a password worlist
 hydraspecificusername () {
     if [ "$REPLY" == 1 ]; then 
     echo -e "$GREEN""you picked the following wordlist: rockyou.txt""$NC"
@@ -73,11 +75,13 @@ else
 fi
 }
 
+# prompt user to enter IP-Address or FQDN
 getnetworkaddress () {
 echo -e "$GREEN""type your destined IP-Address or FQDN: ""$NC"
 read -r NETWORKADDRESS
 }
 
+# Select one of two password wordlists to use
 getpwwordlist () {
     echo -e "$GREEN""select the password wordlist you would like to use\n""$NC"
     select d in rockyou.txt 1milpwlist.txt; 
@@ -85,6 +89,7 @@ getpwwordlist () {
     echo -e "$RED>>> Invalid Selection""$NC"; done
 }
 
+# ask if use would like to specify a wordlist, or use a username wordlist
 getusernamewordlist () {
 echo -e "$GREEN""would you like to use a username wordlist, or would you like to try a specific one?\n""$NC"
 select w in 'I want to use a wordlist' 'I want to try a specific username'; 
@@ -93,6 +98,7 @@ echo -e "$RED>>> Invalid Selection""$NC"; done
 
 }
 
+# all functions
 getdependencies
 getusernamewordlist
 if [ "$REPLY" == 2 ]; then
