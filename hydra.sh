@@ -4,14 +4,14 @@
 # Purpose: Password & Username brute-forcing on Wordpress
 
 # ANSI escape Codes (for colored output, -e required on echo)
-RED='\033[0;31m'
-GREEN='\u001b[32m'
-NC='\033[0m' # No Color
+readonly RED='\033[0;31m'   # Rred
+readonly GREEN='\u001b[32m' # Green
+readonly NC='\033[0m'       # Neutral (White)
 
 # variables for wordlists
-ROCKYOU="$HOME""/wpbruteforcer/wordlists/rockyou.txt"
-ONEMILPWLIST="$HOME""/wpbruteforcer/wordlists/1milpwlist.txt"
-USERNAMELIST="$HOME""/wpbruteforcer/wordlists/usernames.txt"
+readonly ROCKYOU="$HOME""/wpbruteforcer/wordlists/rockyou.txt"
+readonly ONEMILPWLIST="$HOME""/wpbruteforcer/wordlists/1milpwlist.txt"
+readonly USERNAMELIST="$HOME""/wpbruteforcer/wordlists/usernames.txt"
 
 echo '___       __   ________  ________  ________  ___  ___  _________  ________ ________  ________  ________  _______   ________'
 echo '|\  \     |\  \|\   __  \|\   __  \|\   __  \|\  \|\  \|\___   ___\\  _____\\   __  \|\   __  \|\   ____\|\  ___ \ |\   __  \'
