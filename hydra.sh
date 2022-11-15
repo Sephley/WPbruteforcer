@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Author: Joseph Hurley
+# Author: Sephley
 # Purpose: Password & Username brute-forcing on Wordpress
 
 # ANSI escape Codes (for colored output, -e required on echo)
@@ -41,9 +41,9 @@ getdependencies () {
 
     # download wordlists
     echo -e "${GREEN}downloading wordlists...${NC}"
-    wget -q https://github.com/Sephley/WPbruteforcer/raw/main/wordlists/rockyou.txt.gz -O ~/wpbruteforcer/wordlists/rockyou.txt.gz
-    wget -q https://github.com/Sephley/WPbruteforcer/raw/main/wordlists/1milpwlist.txt -O ~/wpbruteforcer/wordlists/1milpwlist.txt
-    wget -q https://raw.githubusercontent.com/Sephley/WPbruteforcer/main/wordlists/usernames.txt -O ~/wpbruteforcer/wordlists/usernames.txt
+    wget -nc -q https://github.com/Sephley/WPbruteforcer/raw/main/wordlists/rockyou.txt.gz -O ~/wpbruteforcer/wordlists/rockyou.txt.gz
+    wget -nc -q https://github.com/Sephley/WPbruteforcer/raw/main/wordlists/1milpwlist.txt -O ~/wpbruteforcer/wordlists/1milpwlist.txt
+    wget -nc -q https://raw.githubusercontent.com/Sephley/WPbruteforcer/main/wordlists/usernames.txt -O ~/wpbruteforcer/wordlists/usernames.txt
 
     # de-compress rockyou.txt
     echo -e "${GREEN}de-compressing wordlists...${NC}"
