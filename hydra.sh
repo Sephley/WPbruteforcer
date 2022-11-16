@@ -41,9 +41,9 @@ getdependencies () {
 
     # download wordlists
     echo -e "${GREEN}downloading wordlists...${NC}"
-    wget -nc -q https://github.com/Sephley/WPbruteforcer/raw/main/wordlists/rockyou.txt.gz -O ~/wpbruteforcer/wordlists/rockyou.txt.gz
-    wget -nc -q https://github.com/Sephley/WPbruteforcer/raw/main/wordlists/1milpwlist.txt -O ~/wpbruteforcer/wordlists/1milpwlist.txt
-    wget -nc -q https://raw.githubusercontent.com/Sephley/WPbruteforcer/main/wordlists/usernames.txt -O ~/wpbruteforcer/wordlists/usernames.txt
+    wget -nc -q https://raw.githubusercontent.com/Sephley/Wordlists/main/rockyou.txt.gz -O ~/wpbruteforcer/wordlists/rockyou.txt.gz
+    wget -nc -q https://raw.githubusercontent.com/Sephley/Wordlists/main/1milpwlist.txt -O ~/wpbruteforcer/wordlists/1milpwlist.txt
+    wget -nc -q https://raw.githubusercontent.com/Sephley/Wordlists/main/usernames.txt -O ~/wpbruteforcer/wordlists/usernames.txt
 
     # de-compress rockyou.txt
     echo -e "${GREEN}de-compressing wordlists...${NC}"
