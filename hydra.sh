@@ -33,7 +33,19 @@ echo '             \|___|/             \|_________|                             
 getdependencies () {
     # install required packages
     echo -e "${GREEN}\ndownloading required packages...${NC}"
-    sudo apt install hydra
+    if [ -f /etc/apt/sources.list ]; then
+        apt update
+        apt -y install hydra
+   elif [-f /etc/yum.conf ]; then
+        yum -y install hydra
+   elif [-f /etc/pacman.conf ]; then
+        pacman -Sy
+        pacman -S --noconfirm pacman
+        pacman -S --noconfirm hydra
+   else
+   echo -e "$RED""Your distribution is not supported by this StackScript""$NC"
+   exit
+fi
 
     # create directories and files
     mkdir ~/wpbruteforcer
