@@ -45,7 +45,7 @@ getdependencies () {
    else
    echo -e "$RED""Your distribution is not supported by this StackScript""$NC"
    exit
-fi
+   fi
 
     # create directories and files
     mkdir ~/wpbruteforcer
