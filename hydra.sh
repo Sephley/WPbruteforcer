@@ -31,9 +31,9 @@ echo '    \|_______|\___/ /            |\_________\|_______|\|__|     \|__|\|__|
 echo '             \|___|/             \|_________|                                                \|___|/'      
 
 getdependencies () {
-    # install required packages
-    echo -e "${GREEN}\ndownloading required packages...${NC}"
-    if [ -f /etc/apt/sources.list ]; then
+   # install required packages
+   echo -e "${GREEN}\ndownloading required packages...${NC}"
+   if [ -f /etc/apt/sources.list ]; then
         apt update
         apt -y install hydra
    elif [-f /etc/yum.conf ]; then
